@@ -1,28 +1,51 @@
 async function searchResults(keyword) {
     try {
-        const results = [];
-    
         const encodedKeyword = encodeURIComponent(keyword);
         const response = await fetch(`https://animeflv.ahmedrangel.com/api/search?query=${encodedKeyword}`);
-        const data = await response.json();
+        const data = await JSON.parse(response);
     
-        if (data.success) {
-            results = data.data.media.map(anime => ({
-                title: anime.title,
-                image: anime.cover,
-                href: `https://www3.animeflv.net/anime/${anime.slug}`
-            }));
-        }
+        const results = data.data.media.map(anime => ({
+            title: anime.title || 'Title: Unknown',
+            image: anime.cover || 'Image: Unknown',
+            href: `https://www3.animeflv.net/anime/${anime.slug}` || 'Href: Unknown'
+        }));
 
-        return results;
+        return JSON.stringify(results);
         
     } catch (error) {
-        console.log('[searchResults] Fetch error:', error);
-        return JSON.stringify([{ title: 'Error', image: '', href: '' }]);
+        console.log('[searchResults] Error:', error);
+        
+        return JSON.stringify([{
+            title: 'Title: Unknown',
+            image: 'Image: Unknown',
+            href: 'Href: Unknown'
+        }]);
     }
 }
 
+async function extractDetails(animeSlug) {
+    try {
+        const encodedAnimeSlug = encodeURIComponent(animeSlug);
+        const response = await fetch(`https://animeflv.ahmedrangel.com/api/anime/${encodedAnimeSlug}`);
+        const data = await JSON.parse(response);
 
+        const animeDetails = [{
+            description: data.data.synopsis || 'Description: Unknown',
+            aliases: `Duration: ${data.data.episodes.length || 'Unknown'}`,
+            airdate: `Aired: ${data.data.aired || 'Unknown'}`
+        }];
+        
+        return JSON.stringify(animeDetails);
+    } catch (error) {
+        console.log('[extractDetails] Error:', error);
+
+        return JSON.stringify([{
+            description: 'Description: Unknown',
+            aliases: 'Duration: Unknown',
+            airdate: 'Aired: Unknown'
+        }]);
+  }
+}
 
 //////////////////////////////////////////
 //////////////////////////////////////////
