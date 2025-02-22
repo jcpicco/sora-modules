@@ -1,0 +1,15 @@
+{
+   "sourceName": "AnimeFLV",
+   "iconUrl": "https://www3.animeflv.net/assets/animeflv/img/logo.png",
+   "author": {
+       "name": "jcpicco",
+       "icon": "https://lh3.googleusercontent.com/a/ACg8ocIl3_qSGlmv5EjYNJN6X2yrftP_ZcTxj90D7ZdTBI3r99eLXuE=s288-c-no"
+   },
+   "version": "1.0.0",
+   "language": "Spanish (SUB)",
+   "streamType": "MP4",
+   "quality": "1080p",
+   "baseUrl": "https://https://www3.animeflv.net/",
+   "searchBaseUrl": "https://www3.animeflv.net/browse?q=%s",
+   "scriptUrl": null
+}
