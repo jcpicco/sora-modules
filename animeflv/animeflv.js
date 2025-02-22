@@ -44,9 +44,30 @@ async function extractDetails(animeSlug) {
             aliases: 'Duration: Unknown',
             airdate: 'Aired: Unknown'
         }]);
-  }
+    }
 }
 
+async function extractEpisodes(animeSlug) {
+    try {
+        const encodedAnimeSlug = encodeURIComponent(animeSlug);
+        const response = await fetch(`https://animeflv.ahmedrangel.com/api/anime/${encodedAnimeSlug}`);
+        const data = await JSON.parse(response)
+
+        const episodesList = data.data.episodes.map(episode => ({
+            href: episode.url || 'Href: Unknown',
+            number: episode.number || 'Number: Unknown'
+        }));
+        
+        return JSON.stringify(episodesList);
+    } catch (error) {
+        console.log('[extractDetails] Error:', error);
+
+        return JSON.stringify([{
+            href: 'Href: Unknown',
+            number: 'Number: Unknown'
+        }]);
+    } 
+}
 //////////////////////////////////////////
 //////////////////////////////////////////
 //////////////////////////////////////////
