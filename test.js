@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-async function testScraper(animeSlug) {
+async function testScraper(episodeSlug) {
 }
 
-testScraper("boruto-naruto-next-generations-tv");
+testScraper("naruto-220");

@@ -12,8 +12,8 @@ async function searchResults(keyword) {
 
         return JSON.stringify(results);
         
-    } catch (error) {
-        console.log('[searchResults] Error:', error);
+    } catch (exception) {
+        console.log('[searchResults] Error: ', exception);
         
         return JSON.stringify([{
             title: 'Title: Unknown',
@@ -36,8 +36,8 @@ async function extractDetails(animeSlug) {
         }];
         
         return JSON.stringify(animeDetails);
-    } catch (error) {
-        console.log('[extractDetails] Error:', error);
+    } catch (exception) {
+        console.log('[extractDetails] Error: ', exception);
 
         return JSON.stringify([{
             description: 'Description: Unknown',
@@ -47,11 +47,11 @@ async function extractDetails(animeSlug) {
     }
 }
 
-async function extractEpisodes(animeSlug) {
+async function extractEpisodes(episodeSlug) {
     try {
-        const encodedAnimeSlug = encodeURIComponent(animeSlug);
+        const encodedAnimeSlug = encodeURIComponent(episodeSlug);
         const response = await fetch(`https://animeflv.ahmedrangel.com/api/anime/${encodedAnimeSlug}`);
-        const data = await JSON.parse(response)
+        const data = await JSON.parse(response);
 
         const episodesList = data.data.episodes.map(episode => ({
             href: episode.url || 'Href: Unknown',
@@ -59,8 +59,8 @@ async function extractEpisodes(animeSlug) {
         }));
         
         return JSON.stringify(episodesList);
-    } catch (error) {
-        console.log('[extractDetails] Error:', error);
+    } catch (exception) {
+        console.log('[extractDetails] Error: ', exception);
 
         return JSON.stringify([{
             href: 'Href: Unknown',
@@ -68,6 +68,29 @@ async function extractEpisodes(animeSlug) {
         }]);
     } 
 }
+
+async function extractStreamUrl(episodeSlug) {
+    try {
+        const encodedEpisodeSlug = encodeURIComponent(episodeSlug);
+        const response = await fetch(`https://animeflv.ahmedrangel.com/api/anime/episode/${encodedEpisodeSlug}`);
+        const data = await JSON.parse(response);
+
+        const sourceList = data.data.servers;
+
+        const preferredSources = ["SW", "YourUpload", "Okru"];
+
+        const selectedSource = preferredSources
+        .map(name => sourceList.find(source => source.name === name))
+        .find(source => source !== undefined) || sourceList[0];
+
+        return selectedSource ? selectedSource.embed : null;
+    } catch (exception) {
+        console.log('[extractStreamUrl] Error: ', exception);
+
+        return null;
+    } 
+}
+
 //////////////////////////////////////////
 //////////////////////////////////////////
 //////////////////////////////////////////
