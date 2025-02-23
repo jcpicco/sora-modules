@@ -23,9 +23,10 @@ async function searchResults(keyword) {
     }
 }
 
-async function extractDetails(animeSlug) {
+async function extractDetails(url) {
     try {
-        const encodedAnimeSlug = encodeURIComponent(animeSlug);
+        const match = url.match(/https:\/\/www3\.animeflv\.net\/anime\/(.+)$/);
+        const encodedAnimeSlug = match[1];
         const response = await fetch(`https://animeflv.ahmedrangel.com/api/anime/${encodedAnimeSlug}`);
         const data = await JSON.parse(response);
 
@@ -47,9 +48,10 @@ async function extractDetails(animeSlug) {
     }
 }
 
-async function extractEpisodes(episodeSlug) {
+async function extractEpisodes(url) {
     try {
-        const encodedAnimeSlug = encodeURIComponent(episodeSlug);
+        const match = url.match(/https:\/\/www3\.animeflv\.net\/anime\/(.+)$/);
+        const encodedAnimeSlug = match[1];
         const response = await fetch(`https://animeflv.ahmedrangel.com/api/anime/${encodedAnimeSlug}`);
         const data = await JSON.parse(response);
 
@@ -69,9 +71,10 @@ async function extractEpisodes(episodeSlug) {
     } 
 }
 
-async function extractStreamUrl(episodeSlug) {
+async function extractStreamUrl(url) {
     try {
-        const encodedEpisodeSlug = encodeURIComponent(episodeSlug);
+        const match = url.match(/https:\/\/www3\.animeflv\.net\/ver\/(.+)$/);
+        const encodedEpisodeSlug = match[1];
         const response = await fetch(`https://animeflv.ahmedrangel.com/api/anime/episode/${encodedEpisodeSlug}`);
         const data = await JSON.parse(response);
 
@@ -88,7 +91,7 @@ async function extractStreamUrl(episodeSlug) {
         console.log('[extractStreamUrl] Error: ', exception);
 
         return null;
-    } 
+    }
 }
 
 //////////////////////////////////////////

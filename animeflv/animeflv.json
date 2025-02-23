@@ -9,7 +9,9 @@
    "language": "Spanish (SUB)",
    "streamType": "MP4",
    "quality": "1080p",
-   "baseUrl": "https://https://www3.animeflv.net/",
+   "baseUrl": "https://www3.animeflv.net/",
    "searchBaseUrl": "https://www3.animeflv.net/browse?q=%s",
-   "scriptUrl": null
+   "scriptUrl": "https://raw.githubusercontent.com/jcpicco/sora-modules/refs/heads/main/animeflv/animeflv.js",
+   "asyncJS": true,
+   "streamAsyncJS": true
 }

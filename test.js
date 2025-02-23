@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-async function testScraper(episodeSlug) {
+async function testScraper(keyword) {
 }
 
-testScraper("naruto-220");
+testScraper("medalist");
