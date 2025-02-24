@@ -1,9 +1,9 @@
 {
    "sourceName": "AnimeFLV",
-   "iconUrl": "https://www3.animeflv.net/assets/animeflv/img/logo.png",
+   "iconUrl": "https://raw.githubusercontent.com/jcpicco/sora-modules/refs/heads/main/animeflv/assets/logo_squared.png",
    "author": {
        "name": "jcpicco",
-       "icon": "https://lh3.googleusercontent.com/a/ACg8ocIl3_qSGlmv5EjYNJN6X2yrftP_ZcTxj90D7ZdTBI3r99eLXuE=s288-c-no"
+       "icon": "https://pbs.twimg.com/profile_images/1894091246609502208/37ZLiEho_400x400.jpg"
    },
    "version": "1.0.0",
    "language": "Spanish (SUB)",
