@@ -91,7 +91,7 @@ async function extractStreamUrl(url) {
             const obfuscatedScript = sourceData.match(/<script[^>]*>\s*(eval\(function\(p,a,c,k,e,d.*?\)[\s\S]*?)<\/script>/);
             const unpackedScript = unpack(obfuscatedScript[1]);
 
-            const streamInfo = unpackedScript.match(/(?<=file:\")https?:\/\/[^\"]+/);
+            const streamInfo = unpackedScript.match(/(?<=\"hls2\":\")https?:\/\/[^\"]+/);
             return streamInfo ? streamInfo[0] : null;
         } else {
             return null;
@@ -222,58 +222,3 @@ function unpack(source) {
         return source;
     }
 }
-
-/*
- * REMOVED FUNCTIONS
- */
-
-// function searchResults(keyword) {
-//     const results = [];
-//     const baseUrl = "https://www3.animeflv.net/";
-    
-//     const filmListRegex = /<ul class="ListAnimes AX Rows A03 C02 D02">([\s\S]*?)<\/ul>/;
-//     const filmListMatch = html.match(filmListRegex);
-    
-//     if (!filmListMatch) {
-//         return results;
-//     }
-    
-//     const filmListContent = filmListMatch[1];
-//     const itemRegex = /<li>\s*<article class="Anime[^>]*">([\s\S]*?)<\/article>\s*<\/li>/g;
-//     const items = filmListContent.match(itemRegex) || [];
-
-//     items.forEach(itemHtml => {
-//         const imgMatch = html.match(/<img src="([^"]+)" alt="([^"]+)">/);
-//         let imageUrl = imgMatch ? imgMatch[1] : '';
-        
-//         const titleMatch = itemHtml.match(/<h3 class="Title">([^<]+)<\/h3>/);
-//         const title = titleMatch ? titleMatch[1] : '';
-        
-//         const hrefMatch = itemHtml.match(/href="([^"]+)"/);
-//         let href = hrefMatch ? hrefMatch[1] : '';
-        
-//         if (imageUrl && title && href) {
-//             if (!imageUrl.startsWith("https")) {
-//                 if (imageUrl.startsWith("/")) {
-//                     imageUrl = baseUrl + imageUrl;
-//                 } else {
-//                     imageUrl = baseUrl + "/" + href;
-//                 }
-//             }
-//             if (!href.startsWith("https")) {
-//                 if (href.startsWith("/")) {
-//                     href = baseUrl + href;
-//                 } else {
-//                     href = baseUrl + "/" + href;
-//                 }
-//             }
-//             results.push({
-//                 title: title.trim(),
-//                 image: imageUrl,
-//                 href: href
-//             });
-//         }
-//     });
-    
-//     return results;
-// }

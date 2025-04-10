@@ -16,7 +16,7 @@ async function extractStreamUrl(url) {
             const obfuscatedScript = sourceData.match(/<script[^>]*>\s*(eval\(function\(p,a,c,k,e,d.*?\)[\s\S]*?)<\/script>/);
             const unpacked = unpack(obfuscatedScript[1]);
 
-            const url = unpacked.match(/(?<=file:\")https?:\/\/[^\"]+/);
+            const url = unpacked.match(/(?<=\"hls2\":\")https?:\/\/[^\"]+/);
             return url ? url[0] : null;
         } else {
             return null;
