@@ -10,7 +10,8 @@ async function extractStreamUrl(url) {
         const selectedSource = data.data.servers.find(source => source.name === "SW") || null;
     
         if (selectedSource && selectedSource.embed !== undefined) {
-            const sourceResponse = await fetch(selectedSource.embed);
+            const fetchUrl = rewriteStreamwishUrl(selectedSource.embed);
+            const sourceResponse = await fetch(fetchUrl);
             const sourceData = await sourceResponse.text();
     
             const obfuscatedScript = sourceData.match(/<script[^>]*>\s*(eval\(function\(p,a,c,k,e,d.*?\)[\s\S]*?)<\/script>/);
@@ -20,6 +21,10 @@ async function extractStreamUrl(url) {
             return url ? url[0] : null;
         } else {
             return null;
+        }
+    
+        function rewriteStreamwishUrl(url) {
+            return url.replace(/^https?:\/\/streamwish\.to\//, "https://xenolyzb.com/");
         }
     } catch (exception) {
         console.log('[extractStreamUrl] Error: ', exception);

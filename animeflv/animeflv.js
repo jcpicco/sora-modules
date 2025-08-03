@@ -1,7 +1,6 @@
-/*
+/****************
  * MAIN FUNCTIONS
- */
-
+ ****************/
 async function searchResults(keyword) {
     try {
         const encodedKeyword = encodeURIComponent(keyword);
@@ -85,7 +84,8 @@ async function extractStreamUrl(url) {
         const selectedSource = data.data.servers.find(source => source.name === "SW") || null;
     
         if (selectedSource && selectedSource.embed !== undefined) {
-            const sourceResponse = await fetch(selectedSource.embed);
+            const fixedUrl = rewriteStreamwishUrl(selectedSource.embed);
+            const sourceResponse = await fetch(fixedUrl);
             const sourceData = await sourceResponse;
     
             const obfuscatedScript = sourceData.match(/<script[^>]*>\s*(eval\(function\(p,a,c,k,e,d.*?\)[\s\S]*?)<\/script>/);
@@ -96,6 +96,10 @@ async function extractStreamUrl(url) {
         } else {
             return null;
         }
+    
+        function rewriteStreamwishUrl(url) {
+            return url.replace(/^https?:\/\/streamwish\.to\//, "https://xenolyzb.com/");
+        }
     } catch (exception) {
         console.log('[extractStreamUrl] Error: ', exception);
     
@@ -103,12 +107,11 @@ async function extractStreamUrl(url) {
     }
 }
 
-/*
+/***********************************************************
  * UNPACKER MODULE
- * Credit to GitHub user "mnsrulz" for  Unpacker Node library
+ * Credit to GitHub user "mnsrulz" for Unpacker Node library
  * https://github.com/mnsrulz/unpacker
- */
-
+ ***********************************************************/
 class Unbaser {
     constructor(base) {
         /* Functor for a given base. Will efficiently convert
